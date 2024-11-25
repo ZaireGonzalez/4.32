@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #login-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        #main-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .module {
+            margin-bottom: 20px;
+        }
+        .module-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            display: none;
+        }
+        .module-table th, .module-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .module-table th {
+            background-color: #f2f2f2;
+        }
+        .error-message {
+            color: red;
+            display: none;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div id="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form onsubmit="return verificarCredenciales()">
+            <input type="text" id="username" placeholder="Usuario" required><br><br>
+            <input type="password" id="password" placeholder="Contraseña" required><br><br>
+            <button type="submit">Entrar</button>
+        </form>
+        <p class="error-message" id="error-message">Usuario o contraseña incorrectos.</p>
+    </div>
+
+    <!-- Main Screen (After Login) -->
+    <div id="main-container">
+        <h2>Bienvenido al Panel de Control</h2>
+        <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+        <div class="module" id="ventas-module">
+            <h3>Ventas</h3>
+            <button onclick="mostrarTabla('ventas')">Ver Ventas</button>
+            <button class="back-button" onclick="regresarMenu()">Regresar al Menú</button>
+            <table class="module-table" id="ventas-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Producto A</td>
+                        <td>50</td>
+                        <td>$100</td>
+                    </tr>
+                    <tr>
+                        <td>Producto B</td>
+                        <td>30</td>
+                        <td>$150</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module" id="anulaciones-module">
+            <h3>Anulaciones</h3>
+            <button onclick="mostrarTabla('anulaciones')">Ver Anulaciones</button>
+            <button class="back-button" onclick="regresarMenu()">Regresar al Menú</button>
+            <table class="module-table" id="anulaciones-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Motivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Producto A</td>
+                        <td>Cancelación por error</td>
+                    </tr>
+                    <tr>
+                        <td>Producto B</td>
+                        <td>Stock insuficiente</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module" id="cierres-module">
+            <h3>Cierres</h3>
+            <button onclick="mostrarTabla('cierres')">Ver Cierres</button>
+            <button class="back-button" onclick="regresarMenu()">Regresar al Menú</button>
+            <table class="module-table" id="cierres-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Total Ventas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01/11/2024</td>
+                        <td>$5000</td>
+                    </tr>
+                    <tr>
+                        <td>02/11/2024</td>
+                        <td>$3000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module" id="proveedores-module">
+            <h3>Proveedores</h3>
+            <button onclick="mostrarTabla('proveedores')">Ver Proveedores</button>
+            <button class="back-button" onclick="regresarMenu()">Regresar al Menú</button>
+            <table class="module-table" id="proveedores-table">
+                <thead>
+                    <tr>
+                        <th>Proveedor</th>
+                        <th>Producto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Proveedor A</td>
+                        <td>Producto A</td>
+                    </tr>
+                    <tr>
+                        <td>Proveedor B</td>
+                        <td>Producto B</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module" id="peticiones-module">
+            <h3>Peticiones, Quejas y Reclamos</h3>
+            <button onclick="mostrarTabla('peticiones')">Ver Peticiones</button>
+            <button class="back-button" onclick="regresarMenu()">Regresar al Menú</button>
+            <table class="module-table" id="peticiones-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Reclamo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cliente A</td>
+                        <td>Producto defectuoso</td>
+                    </tr>
+                    <tr>
+                        <td>Cliente B</td>
+                        <td>Retraso en entrega</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module" id="configuraciones-module">
+            <h3>Configuraciones</h3>
+            <button onclick="mostrarTabla('configuraciones')">Ver Configuraciones</button>
+            <button class="back-button" onclick="regresarMenu()">Regresar al Menú</button>
+            <table class="module-table" id="configuraciones-table">
+                <thead>
+                    <tr>
+                        <th>Configuración</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Configuración A</td>
+                        <td>Valor 1</td>
+                    </tr>
+                    <tr>
+                        <td>Configuración B</td>
+                        <td>Valor 2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module" id="inventarios-module">
+            <h3>Inventarios</h3>
+            <button onclick="mostrarTabla('inventarios')">Ver Inventarios</button>
+            <button class="back-button" onclick="regresarMenu()">Regresar al Menú</button>
+            <table class="module-table" id="inventarios-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Producto A</td>
+                        <td>100</td>
+                        <td>$50</td>
+                    </tr>
+                    <tr>
+                        <td>Producto B</td>
+                        <td>200</td>
+                        <td>$80</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function verificarCredenciales() {
+            const usuario = document.getElementById('username').value;
+            const contraseña = document.getElementById('password').value;
+
+            // Credenciales fijas para demostración
+            if (usuario === 'admin' && contraseña === '12345') {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('main-container').style.display = 'block';
+                return false; // Evitar el envío del formulario
+            } else {
+                document.getElementById('error-message').style.display = 'block';
+                return false;
+            }
+        }
+
+        function cerrarSesion() {
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('main-container').style.display = 'none';
+        }
+
+        function mostrarTabla(modulo) {
+            const tablas = document.querySelectorAll('.module-table');
+            tablas.forEach(tabla => tabla.style.display = 'none');
+            document.getElementById(modulo + '-table').style.display = 'table';
+        }
+
+        function regresarMenu() {
+            const tablas = document.querySelectorAll('.module-table');
+            tablas.forEach(tabla => tabla.style.display = 'none');
+        }
+    </script>
+
+</body>
+</html>
